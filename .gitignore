@@ -1,0 +1,15 @@
+# dependencies
+api-server/node_modules
+web-server/node_modules
+
+# production
+web-server/build
+
+# misc
+api-server/DS_Store
+web-server/DS_Store
+
+
+# environment
+api-server/.env
+web-server/.env
