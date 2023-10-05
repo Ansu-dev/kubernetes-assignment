@@ -40,6 +40,7 @@ spec:
       containers:
         - name: api-app
           image: angwangsu/api-app:1.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           resources:
