@@ -1,0 +1,48 @@
+# api-app service
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app
+  namespace: node-app
+  labels:
+    service: web-app
+    project: node-app
+spec:
+  type: NodePort
+  selector:
+    service: web-app
+    project: node-app
+  ports:
+    - port: 80
+      targetPort: 3000
+
+---
+# api-app deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+  namespace: node-app
+  labels:
+    service: web-app
+    project: node-app
+spec:
+  selector:
+    matchLabels:
+      service: web-app
+      project: node-app
+  template:
+    metadata:
+      labels:
+        service: web-app
+        project: node-app
+    spec:
+      containers:
+        - name: web-app
+          image: angwangsu/web-app:1.0
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "50m"
