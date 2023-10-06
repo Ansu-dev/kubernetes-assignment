@@ -1,12 +1,13 @@
-import express, { Express, Response } from "express";
+import express, { Express, Request, Response } from "express";
 import cors from "cors";
 
 const app: Express = express();
 const PORT = 8080;
 
 app.use(cors());
-app.get("/", (_, res: Response) => {
-  res.send(new Date());
+app.get("/api", (req: Request, res: Response) => {
+  console.log("REQUEST : " + req.method + " " + req.url);
+  res.send("Server API Request Success");
 });
 
 app.listen(PORT, () => {
