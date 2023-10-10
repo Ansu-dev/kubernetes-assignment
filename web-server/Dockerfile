@@ -9,9 +9,11 @@ COPY package.json .
 
 RUN npm install
 
-# 현재 디렉토리의 파일들을 복사에서 넣어줌 => copy를 해주기전에 dockerignore를 해줘야함
 COPY . .
 
+# 현재 디렉토리의 파일들을 복사에서 넣어줌 => copy를 해주기전에 dockerignore를 해줘야함
 RUN npm install -g serve
+
+RUN npm run build
 
 CMD ["serve","-s","build","-l","80"]

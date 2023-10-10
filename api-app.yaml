@@ -28,6 +28,7 @@ metadata:
     service: api-app
     project: node-app
 spec:
+  replicas: 2
   selector:
     matchLabels:
       service: api-app
@@ -40,7 +41,7 @@ spec:
     spec:
       containers:
         - name: api-app
-          image: angwangsu/api-app:2.0
+          image: angwangsu/api-app:1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
