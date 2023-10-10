@@ -13,7 +13,8 @@ spec:
     service: api-app
     project: node-app
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 8080
 
 ---
@@ -39,7 +40,7 @@ spec:
     spec:
       containers:
         - name: api-app
-          image: angwangsu/api-app:1.0
+          image: angwangsu/api-app:2.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

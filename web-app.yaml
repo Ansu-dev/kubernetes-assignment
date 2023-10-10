@@ -13,8 +13,9 @@ spec:
     service: web-app
     project: node-app
   ports:
-    - port: 80
-      targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 80
 
 ---
 # api-app deployment
@@ -39,9 +40,10 @@ spec:
     spec:
       containers:
         - name: web-app
-          image: angwangsu/web-app:1.0
+          image: angwangsu/web-app:2.0
+          imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 80
           resources:
             limits:
               memory: "64Mi"
