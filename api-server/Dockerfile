@@ -1,5 +1,5 @@
 # node 이미지를 컨테이너에 넣음
-FROM node:16
+FROM node:16 AS build
 
 #애플리케이션을 위한 폴더를 따로 모아둠 (컨테이너에 접근할때 workdir로 바로 접근)
 WORKDIR /app
@@ -9,9 +9,19 @@ COPY package.json .
 
 RUN npm install
 
-# 현재 디렉토리의 파일들을 복사에서 넣어줌 => copy를 해주기전에 dockerignore를 해줘야함
-COPY . .
-
 RUN npm run build
 
-CMD ["node","index.js"]
+
+FROM node:16-alpine as production
+WORKDIR /app
+
+COPY package.json .
+# 프로덕션 의존성만 설치
+RUN npm install --only=production
+
+COPY --from=build /app/dist ./dist
+
+EXPOSE 8080
+
+
+CMD ["node","dist/index.js"]

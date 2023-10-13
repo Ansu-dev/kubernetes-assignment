@@ -13,8 +13,7 @@ spec:
     service: web-app
     project: node-app
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 80
 
 ---

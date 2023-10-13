@@ -1,19 +1,43 @@
 # node 이미지를 컨테이너에 넣음
-FROM node:16
+# FROM node:16
 
-#애플리케이션을 위한 폴더를 따로 모아둠 (컨테이너에 접근할때 workdir로 바로 접근)
+# #애플리케이션을 위한 폴더를 따로 모아둠 (컨테이너에 접근할때 workdir로 바로 접근)
+# WORKDIR /app
+
+# # 종속성 부분만 따로 복사한다(종속성이 바뀌지않고 소스코드가 변경되어도 매번 종속성을 설치하는게 비효율적)
+# COPY package.json .
+
+# RUN npm install
+
+# COPY . .
+
+# # 현재 디렉토리의 파일들을 복사에서 넣어줌 => copy를 해주기전에 dockerignore를 해줘야함
+# RUN npm install -g serve
+
+# RUN npm run build
+
+# CMD ["serve","-s","build","-l","80"]
+
+# build step
+FROM node:16 as build
+
 WORKDIR /app
 
-# 종속성 부분만 따로 복사한다(종속성이 바뀌지않고 소스코드가 변경되어도 매번 종속성을 설치하는게 비효율적)
 COPY package.json .
 
-RUN npm install
+RUN npm ci --silent
 
 COPY . .
-
-# 현재 디렉토리의 파일들을 복사에서 넣어줌 => copy를 해주기전에 dockerignore를 해줘야함
-RUN npm install -g serve
-
 RUN npm run build
 
-CMD ["serve","-s","build","-l","80"]
+
+# runtime step
+FROM nginx:stable-alpine
+
+COPY --from=build /app/build /usr/share/nginx/html
+
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 3000
+
+CMD ["nginx",'-g','daemon off;']

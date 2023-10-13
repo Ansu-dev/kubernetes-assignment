@@ -2,6 +2,8 @@
 # Ingress 이름: node-app
 # Ingress 네임스페이스: node-app
 # Ingress 레이블: project=node-app
+
+# nginx-ingress annotiaons을 달아줘야함 - 퍼블릭 클라우드 환경에서는 nginx을 달아주지않으면 proxy를 할수 없음
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
