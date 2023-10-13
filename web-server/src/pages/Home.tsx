@@ -6,8 +6,12 @@ import axios from "axios";
 const Home = () => {
   const [response, setResponse] = useState("");
   useEffect(() => {
-    axios
-      .get(process.env.BASE_URL ?? "http://localhost:8080/api")
+    const api = axios.create({
+      baseURL: "/api",
+    });
+
+    api
+      .get("/")
       .then((res) => {
         setResponse(res.data);
       })
