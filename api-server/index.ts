@@ -5,7 +5,7 @@ const app: Express = express();
 const PORT = 8080;
 
 app.use(cors());
-app.get("/api", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   console.log("REQUEST : " + req.method + " " + req.url);
   res.send("Server API Request Success");
 });
