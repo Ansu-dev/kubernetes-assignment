@@ -14,7 +14,7 @@ spec:
     project: node-app
   ports:
     - port: 80 # 외부에서 접근할 때 사용하는 포트, 필요에 따라 변경할 수 있다.
-      targetPort: 3000 # 앱이 리스닝하고 있는 파드 내부의 포트
+      targetPort: 80 # 앱이 리스닝하고 있는 파드 내부의 포트
 
 ---
 # web-app deployment
@@ -40,8 +40,7 @@ spec:
     spec:
       containers:
         - name: web-app
-          image: angwangsu/web-app:2.0
-          imagePullPolicy: Always
+          image: nginx
           ports:
             - containerPort: 80
           resources:
